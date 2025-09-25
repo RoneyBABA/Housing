@@ -1,4 +1,5 @@
 # LEARNINGS FROM THE PROJECT [Proj0]
+        MANY VARIATIONS OF THE SAME QUERRY HAS BEEN TRIED IN THE CODE, WHICH MEANS DO EXPLORE THE CODE TO LEARN MORE
 
 df.head()       ##df.head(10)
         It returns top 5 rows of the dataset and lets us know what type of data we are dealing with
@@ -62,4 +63,49 @@ df3['size'].nunique
 df3.bhk > 20
         Gives us the boolean value for each row but,
 df3[df3.bhak > 20]
-        gives us all the columns of the row where bhk is above 20
+        gives us all the columns of the row where bhk is above 20       
+
+
+# Creating vs accessing the Column
+        To create
+                df4['price_per_sqft'] = df4['price']*100000/df4.['total_sqft']
+        To Access
+                df4.price_per_sqft = df4.price*100000//df4.total_sqft
+
+
+# Number of distinct entries in a column
+        df.col1.nunique                    OR
+        len(df.col1.unique)
+
+
+# Internal working
+        df4[df4.price_per_sqft.max()] does not map because lets say:
+        max() functions returns 2500, and df4[2500] may not be present in the dataset
+        INSTEAD
+                df4[df4.price_per_sqft == df4.price_per_sqft.max()]
+
+        For Max and Min
+                df.nlargest(5, 'col2')          df.nsmallest(6, 'col3')
+# Sub Querries  
+        loc_stats = df4.groupby('location')['location'].count()
+
+        SQL
+                SELECT * FROM dataset
+                WHERE location IN (
+                        SELECT location FROM dataset
+                        GROUP BY location
+                        HAVING COUNT(*) = 1
+                );
+
+
+# Observations
+        df4.location.gropuby('location')['location'].count().sort_value(Ascending = False)
+        CAN BE REPLACED WITH
+        df4.location.value_counts()
+
+
+# Statistics Theory
+        In a Normal Bell Curved Graph : mean = median = mode
+        Standard Deviation (sd) = mean(distance of point from the mean)
+        sd covers 68%, 2sd covers 95% and 3sd covers 99.7%.
+        So in a banking transaction if a amount exceeds the value of 3sd, we get an notification. As an outlier is detected it can be a fraudulent payment.
