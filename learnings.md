@@ -104,8 +104,26 @@ df3[df3.bhak > 20]
         df4.location.value_counts()
 
 
+# Observations
+        // This is not possible
+        outlier = df4[(df4.sqft_per_bhk<300) | (df4.sqft_per_bhk>2000)]
+        df5 = df4[~outlier]
+
+        // We have to use conditions. Either use it directly or store the condition in the variable.
+        df5 = df4[~(df4.sqft_per_bhk<300) | (df4.sqft_per_bhk>2000)]
+        cond = (df4.sqft_per_bhk<300) | (df4.sqft_per_bhk>2000)
+        df5 = df4[~cond]
+
+
 # Statistics Theory
         In a Normal Bell Curved Graph : mean = median = mode
         Standard Deviation (sd) = mean(distance of point from the mean)
         sd covers 68%, 2sd covers 95% and 3sd covers 99.7%.
         So in a banking transaction if a amount exceeds the value of 3sd, we get an notification. As an outlier is detected it can be a fraudulent payment.
+
+
+# Observations
+        df.att1.describe()
+        Gives the important Mathematical Attributes of the Column. (mean, min, max, std)
+
+        
