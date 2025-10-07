@@ -127,3 +127,76 @@ df3[df3.bhak > 20]
         Gives the important Mathematical Attributes of the Column. (mean, min, max, std)
 
         
+# Dummy Variables & One Hot Encoding
+        The model can't deal with Strings to train. We usually sub them with a number.
+  CATEGORICAL VARIABLES
+        Nominal
+         These are String Variables which do not have any innate order. Ex: location, color.
+         Suppose if DataSet consists of colors : Red, Blue, Yellow.
+         If one encodes, Red = 1, Blue = 2, Yellow = 3.
+         This might lead to flaweed conclusions : 1 + 2 = 3 or 1>2>3
+                Hence, These types of variables are not associated with integers
+
+        Ordinal
+         Unlike Nominal variables, These variables have a heirachy in its structure.
+         ex: Dissatisfied, Neutral, Satisfied
+
+        Hence, TO ENCODE NOMINAL VARIABLES :
+                We create multiple Dummy variables and encode em.
+                   Color_Blue  Color_Green  Color_Red
+                0           0            0          1
+                1           1            0          0
+                2           0            1          0
+                3           0            0          1
+
+# Dummy Variable Trap
+        Equation for Multi Linear Regression :
+                y = a0 + a1x1 + a2x2 .... anxn
+
+        Here in the above example we can see : 
+                Color_Red = 1 – (Color_Blue + Color_Green) //Color red column is redundant, and heance we can drop it.
+                ex  : We have dropped 'others' column in the example, because if value of all the dummy variables is False, The location belongs to 'OTHERS'
+
+        Also we know, to arrive at aforementioned equation we must :
+               Res = Cross multiply (Transpose(M) X M)
+               lets say det(Res) = 0. We can draw following conclusions :
+                 1. That means the columns are perfectly correlated
+                 2. When predictors are perfectly correlated, the matrix becomes singular (non-invertible)
+                 3. This is a case of perfect multicollinearity.
+        
+        Regression needs to invert this matrix to solve for coefficients.
+                Since it can’t invert, the solution is not unique → the model can’t decide which dummy variable gets what weight.
+
+        We can simply consider (n-1) atrributes, to train our model. Any of the attributes can be dropped and just like int the example discuused above, a0 will componsate for it's absence. 
+
+
+# Random State
+        train_test_split(X,Y,test_size=0.2,random_state=10)
+        The function randomly shuffles your data before splitting into train and test sets.
+        random_state is just a seed value for the random number generator. (With same input, we get the same output)
+        It is advisible because : 
+                Reproducibility → in ML experiments, you want results to be consistent across runs.
+                Debugging → easier if you can reproduce the same train/test split.x
+                In research/assignments, reviewers can verify your results.
+
+
+# Cross Validation and Shuffle split
+        SHUFFLE SPLIT
+        cvs = ShuffleSplit(n_splits=5, test_size=0.2, random_state =0)
+
+        It uses random_state seed to randomize the dataset, and then splits the data into n_splits. Each split has it's own training and test dataset.
+
+        K - Fold Cross Validation
+        Idea is to Split the dataset into k folds (parts), train on k-1 folds and test on the remaining one, repeat until every fold has been used as test.
+
+        Final score = average across all folds.
+
+        CROSS VALIDATION
+        cross_val_score(LinearRegression(), X, Y, cv=cvs)
+        It runs the test on the selected model.
+        It gives an array as output. They are accuracy of the model with respect to each split.
+
+
+# Lasso Regression
+        It performs better than the lineaar Regression on the test dataset, because linear Reg model tends to ovefit and the Lasso regression adds a penalty value to the regular regression. It is popularly used in for feature Selection.
+        It makes the sure that as the value of Lamda grows, the atrributes which has weakest contribution to the model, is 0.
