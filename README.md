@@ -1,7 +1,6 @@
 ## 🏠 Bangalore House Price Prediction
 
-*This project predicts real estate prices (houses, apartments, and plots) across **Bangalore**, using data from [this Kaggle dataset](https://www.kaggle.com/datasets/sumanbera19/bengaluru-house-price-dataset).*
-
+This project predicts real estate prices (houses, apartments, and plots) across **Bangalore**, using data from [this Kaggle dataset](https://www.kaggle.com/datasets/sumanbera19/bengaluru-house-price-dataset). \n
 This project helped me understand real-world data workflows and made me more adaptable and eager to grow in the **data science and ML** domain.
 ---
 
