@@ -200,3 +200,7 @@ df3[df3.bhak > 20]
 # Lasso Regression
         It performs better than the lineaar Regression on the test dataset, because linear Reg model tends to ovefit and the Lasso regression adds a penalty value to the regular regression. It is popularly used in for feature Selection.
         It makes the sure that as the value of Lamda grows, the atrributes which has weakest contribution to the model, is 0.
+
+
+# Decision Tree Regression
+        Learn about it here : https://youtu.be/UhY5vPfQIrA?si=Y4BYdrgdoeD6xIwP
