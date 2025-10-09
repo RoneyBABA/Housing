@@ -1,6 +1,7 @@
 # 🏠 Bangalore House Price Prediction
 
 This project predicts real estate prices (houses, apartments, and plots) across **Bangalore**, using data from [this Kaggle dataset](https://www.kaggle.com/datasets/sumanbera19/bengaluru-house-price-dataset).
+
 This project helped me understand real-world data workflows and made me more adaptable and eager to grow in the **data science and ML** domain.
 ---
 
@@ -45,12 +46,15 @@ print(predicted_price)
 ## 📩 Contact
 
 If you have an **updated dataset**, feel free to reach out!
+
 I’m happy to **retrain** the model and improve its performance.
+
 If you’d like to collaborate or to suggest improvements, feel free to ping me — I’m always open to learning and feedback.
 ---
 
 ## 🪪 License
 
 You are free to use the trained model (`FinalModel.pickle`) for **personal or educational purposes**.
+
 Please credit this repository if you build upon it.
 
