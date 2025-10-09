@@ -46,9 +46,9 @@ print(predicted_price)
 
 ## 📩 Contact
 
-**If you have an **updated dataset**, feel free to reach out!
+If you have an **updated dataset**, feel free to reach out!
 
-I’m happy to **retrain** the model and improve its performance.**
+I’m happy to **retrain** the model and improve its performance.
 
 If you’d like to collaborate or to suggest improvements, feel free to ping me — I’m always open to learning and feedback.
 
