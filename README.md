@@ -8,11 +8,10 @@ This project helped me understand real-world data workflows and made me more ada
 
 ## 💡 Project Overview
 
-* Trained a **Linear Regression model** to estimate property prices based on features like total area, number of bedrooms, and location.
+* Trained a **Model** to estimate property prices based on features like total area, number of bedrooms, and location.
 * Preprocessed for inconsistent or noisy data through various data pipelines
-* Compared the performance of **Lasso Regression** and **Decision Tree Regression** using **GridSearchCV**.
+* Compared the performance with other  **Statistical models**.
 * Used **Cross-Validation** and **ShuffleSplit** to evaluate model consistency.
-* Linear Regression performed best overall, balancing accuracy and interpretability.
 * Exports trained model as `FinalModel.pickle` for reuse
 
 ---
