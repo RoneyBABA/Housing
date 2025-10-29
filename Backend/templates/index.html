@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bangalore House Price Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            text-align: center;
+            margin-top: 50px;
+        }
+        form {
+            display: inline-block;
+            padding: 20px;
+            border-radius: 12px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        input, select, button {
+            margin: 8px;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            width: 250px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>🏠 Bangalore House Price Predictor</h2>
+    <form action="/predict" method="post">
+        <label>Total Sqft:</label><br>
+        <input type="number" name="total_sqft" step="any" required><br>
+
+        <label>BHK:</label><br>
+        <input type="number" name="bhk" step="1" required><br>
+
+        <label>Location:</label><br>
+        <input type="text" name="location" placeholder="e.g., hsr layout" required><br>
+
+        <label>Build-up Type:</label><br>
+        <select name="build_up" required>
+            <option value="built-up area">Built-up Area</option>
+            <option value="carpet area">Carpet Area</option>
+            <option value="super built-up area">Super Built-up Area</option>
+        </select><br><br>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if prediction_text %}
+        <h3 style="margin-top: 20px;">{{ prediction_text }}</h3>
+    {% endif %}
+</body>
+</html>
