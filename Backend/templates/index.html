@@ -1,67 +1,152 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Bangalore House Price Predictor</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f5f7fa;
-            color: #333;
-            text-align: center;
-            margin-top: 50px;
-        }
-        form {
-            display: inline-block;
-            padding: 20px;
-            border-radius: 12px;
-            background: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        input, select, button {
-            margin: 8px;
-            padding: 8px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            width: 250px;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            border: none;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        h2 {
-            margin-bottom: 20px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🏙️ Bangalore House Price Predictor</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at 20% 20%, #0f2027, #203a43, #2c5364);
+      color: #e0e7ff;
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      padding: 40px 50px;
+      text-align: center;
+      width: 360px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.6rem;
+      color: #00e0ff;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin: 10px 0 5px;
+      color: #cbd5e1;
+      font-weight: 500;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: #e0e7ff;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 6px #00e0ff;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      font-family: 'Orbitron', sans-serif;
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #0072ff, #00c6ff);
+      transform: scale(1.05);
+      box-shadow: 0 0 10px #00e0ff;
+    }
+
+    h3 {
+      margin-top: 25px;
+      color: #b3e5fc;
+      font-size: 1.1rem;
+      animation: fadeIn 1s ease-in;
+    }
+
+    .subtle {
+      font-size: 0.9rem;
+      color: #94a3b8;
+      font-style: italic;
+      margin-top: 4px;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+  </style>
 </head>
+
 <body>
-    <h2>🏠 Bangalore House Price Predictor</h2>
+  <div class="card">
+    <h2>🏙️ Bangalore Price Predictor</h2>
+
     <form action="/predict" method="post">
-        <label>Total Sqft:</label><br>
-        <input type="number" name="total_sqft" step="any" required><br>
+      <label>Total Sqft:</label>
+      <input type="number" name="total_sqft" step="any" required>
 
-        <label>BHK:</label><br>
-        <input type="number" name="bhk" step="1" required><br>
+      <label>BHK:</label>
+      <input type="number" name="bhk" step="1" required>
 
-        <label>Location:</label><br>
-        <input type="text" name="location" placeholder="e.g., hsr layout" required><br>
+      <label>Location:</label>
+      <input type="text" name="location" placeholder="e.g., hsr layout" required>
 
-        <label>Build-up Type:</label><br>
-        <select name="build_up" required>
-            <option value="built-up area">Built-up Area</option>
-            <option value="carpet area">Carpet Area</option>
-            <option value="super built-up area">Super Built-up Area</option>
-        </select><br><br>
+      <label>Build-up Type:</label>
+      <select name="build_up" required>
+        <option value="built-up area">Built-up Area</option>
+        <option value="carpet area">Carpet Area</option>
+        <option value="super built-up area">Super Built-up Area</option>
+      </select>
 
-        <button type="submit">Predict</button>
+      <button type="submit">Predict</button>
     </form>
 
     {% if prediction_text %}
-        <h3 style="margin-top: 20px;">{{ prediction_text }}</h3>
+      <h3>{{ prediction_text }}</h3>
+      {% if actual_value %}
+        <div class="subtle">(Actual value: ₹ {{ actual_value }})</div>
+      {% endif %}
     {% endif %}
+
+    <div class="footer">AI-powered insights • Precision in every sq.ft</div>
+  </div>
 </body>
 </html>

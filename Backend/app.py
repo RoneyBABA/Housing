@@ -56,6 +56,7 @@ def home():
 
 
 @app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['POST'])
 def predict():
     try:
         sqft = float(request.form['total_sqft'])
@@ -67,11 +68,14 @@ def predict():
 
         if pred is None:
             return render_template('index.html', prediction_text=formatted)
-        else:
-            return render_template('index.html', prediction_text=f'🏠 Estimated Price: {formatted}')
 
+        actual_value = f"{pred:,.2f}"  # formatted number with commas and 2 decimals
+        return render_template('index.html', 
+                               prediction_text=f'🏠 Estimated Price: {formatted}',
+                               actual_value=actual_value)
     except Exception as e:
         return render_template('index.html', prediction_text=f'⚠️ Error: {str(e)}')
+
 
 
 if __name__ == '__main__':
