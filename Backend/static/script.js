@@ -9,3 +9,9 @@ function revealCards() {
 }
 window.addEventListener('scroll', revealCards);
 revealCards();
+
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+  const gradient = document.querySelector('.scroll-gradient');
+  gradient.style.opacity = Math.min(scrollY / 400, 1);
+});
