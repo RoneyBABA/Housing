@@ -4,8 +4,8 @@ import pickle, json, numpy as np
 app = Flask(__name__)
 
 # Load model and metadata
-model = pickle.load(open('d:\College\Projs\Housing\Backend\FinalModel.pickle', 'rb'))
-columns = json.load(open('d:\College\Projs\Housing\Backend\columns.json'))['data_colums']
+model = pickle.load(open('FinalModel.pickle', 'rb'))
+columns = json.load(open('columns.json'))['data_colums']
 
 # ---------- Core Prediction Function ----------
 def predict_price(location, sqft, bhk, build_up):
