@@ -1,152 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🏙️ Bangalore House Price Predictor</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;400;600&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bangalore House Price Predictor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      background: radial-gradient(circle at 20% 20%, #0f2027, #203a43, #2c5364);
-      color: #e0e7ff;
-      font-family: 'Poppins', sans-serif;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(14px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 20px;
-      padding: 40px 50px;
-      text-align: center;
-      width: 360px;
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
-      animation: fadeIn 1.2s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h2 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1.6rem;
-      color: #00e0ff;
-      margin-bottom: 25px;
-    }
-
-    label {
-      display: block;
-      text-align: left;
-      margin: 10px 0 5px;
-      color: #cbd5e1;
-      font-weight: 500;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 12px;
-      border-radius: 10px;
-      border: none;
-      background: rgba(255, 255, 255, 0.1);
-      color: #e0e7ff;
-      font-size: 0.95rem;
-      transition: all 0.3s ease;
-    }
-
-    input:focus, select:focus {
-      outline: none;
-      background: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 0 6px #00e0ff;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 5px;
-      background: linear-gradient(90deg, #00c6ff, #0072ff);
-      color: #fff;
-      font-weight: 600;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.4s ease;
-      font-family: 'Orbitron', sans-serif;
-      letter-spacing: 1px;
-    }
-
-    button:hover {
-      background: linear-gradient(90deg, #0072ff, #00c6ff);
-      transform: scale(1.05);
-      box-shadow: 0 0 10px #00e0ff;
-    }
-
-    h3 {
-      margin-top: 25px;
-      color: #b3e5fc;
-      font-size: 1.1rem;
-      animation: fadeIn 1s ease-in;
-    }
-
-    .subtle {
-      font-size: 0.9rem;
-      color: #94a3b8;
-      font-style: italic;
-      margin-top: 4px;
-    }
-
-    .footer {
-      margin-top: 20px;
-      font-size: 0.75rem;
-      color: #64748b;
-    }
-  </style>
 </head>
-
 <body>
-  <div class="card">
-    <h2>🏙️ Bangalore Price Predictor</h2>
 
-    <form action="/predict" method="post">
-      <label>Total Sqft:</label>
-      <input type="number" name="total_sqft" step="any" required>
+<div class="scroll-gradient"></div>
 
-      <label>BHK:</label>
-      <input type="number" name="bhk" step="1" required>
+<!-- HERO SECTION -->
+<section class="hero">
+  <div class="hero-content">
+    <h1> Bangalore House Price Predictor</h1>
+    <p>Discover accurate, AI-driven property valuations built on 13,000+ curated Bangalore listings. 
+    Designed for transparency, precision, and elegance.</p>
 
-      <label>Location:</label>
-      <input type="text" name="location" placeholder="e.g., hsr layout" required>
+    <div class="form-container">
+      <form action="/" method="post">
+        <label>Total Sqft:</label>
+        <input type="number" name="total_sqft" step="any" required value="{{ request.form.total_sqft or '' }}">
 
-      <label>Build-up Type:</label>
-      <select name="build_up" required>
-        <option value="built-up area">Built-up Area</option>
-        <option value="carpet area">Carpet Area</option>
-        <option value="super built-up area">Super Built-up Area</option>
-      </select>
+        <label>BHK:</label>
+        <input type="number" name="bhk" required value="{{ request.form.bhk or '' }}">
 
-      <button type="submit">Predict</button>
-    </form>
+        <label>Location:</label>
+        <input type="text" name="location" placeholder="e.g., hsr layout" required value="{{ request.form.location or '' }}">
 
-    {% if prediction_text %}
-      <h3>{{ prediction_text }}</h3>
-      {% if actual_value %}
-        <div class="subtle">(Actual value: ₹ {{ actual_value }})</div>
+        <label>Build-up Type:</label>
+        <select name="build_up" required>
+          <option value="built-up area" {% if request.form.build_up=='built-up area' %}selected{% endif %}>Built-up Area</option>
+          <option value="carpet area" {% if request.form.build_up=='carpet area' %}selected{% endif %}>Carpet Area</option>
+          <option value="super built-up area" {% if request.form.build_up=='super built-up area' %}selected{% endif %}>Super Built-up Area</option>
+        </select>
+
+        <button type="submit">Predict</button>
+      </form>
+
+      {% if prediction_text %}
+        <div class="prediction">{{ prediction_text }}</div>
+        {% if actual_value %}
+          <div class="subtle">(₹ {{ actual_value }})</div>
+        {% endif %}
       {% endif %}
-    {% endif %}
-
-    <div class="footer">AI-powered insights • Precision in every sq.ft</div>
+    </div>
   </div>
+</section>
+
+<!-- FEATURE CARDS -->
+<section class="cards">
+
+  <!-- CARD 1 -->
+  <div class="card left">
+    <div class="text">
+      <h2>Model Overview</h2>
+      <p>Our predictive system is powered by a fine-tuned <b>Linear Regression</b> model trained on over 
+      <b>13,320 Bangalore property records</b>. It understands relationships between <b>square footage, location, and configuration</b> to estimate realistic market prices.</p>
+      <p>The model achieved an <b>R² score of 0.86</b> on test data — meaning it explains over 86% of price variance with exceptional consistency. 
+      Predictions are expressed in lakhs and crores for better real-world readability.</p>
+    </div>
+    <div class="image" style="background-image:url('{{ url_for('static', filename='img/model.jpg') }}');"></div>
+  </div>
+
+  <!-- CARD 2 -->
+  <div class="card right">
+    <div class="image" style="background-image:url('{{ url_for('static', filename='img/features.jpg') }}');"></div>
+    <div class="text">
+      <h2> Feature Engineering</h2>
+      <p>Beyond raw data, we introduced intelligent derived metrics such as <b>sqft_per_bhk</b> (efficiency ratio) 
+      and <b>price_per_sqft</b> (value normalization). This transformation ensures the model learns structural fairness — 
+      identifying whether an apartment is overpriced relative to its size and locality.</p>
+      <p>1300+ localities were clustered into 240 meaningful regions, preserving location intelligence while preventing data sparsity. 
+      These engineered features boost both <b>stability</b> and <b>explainability</b> of predictions.</p>
+    </div>
+  </div>
+
+  <!-- CARD 3 -->
+  <div class="card left">
+    <div class="text">
+      <h2>Outlier Handling</h2>
+      <p>We implemented strong <b>domain-driven outlier filters</b>. Any property that violates natural market logic — 
+      such as 1BHK units over 2000 sqft or 8BHK apartments under 600 sqft — is systematically removed.</p>
+      <p>Additionally, per-location price normalization (mean ± std deviation) ensures consistent comparisons. 
+      This refinement significantly reduced skewness, making predictions more dependable and realistic.</p>
+    </div>
+    <div class="image" style="background-image:url('{{ url_for('static', filename='img/outliers.jpg') }}');"></div>
+  </div>
+
+  <!-- CARD 4 -->
+  <div class="card right">
+    <div class="image" style="background-image:url('{{ url_for('static', filename='img/validation.jpg') }}');"></div>
+    <div class="text">
+      <h2>Validation & Reliability</h2>
+      <p>Our model’s reliability stems from transparent design. Every prediction undergoes 
+      <b>range validation</b> to ensure no property violates area-to-room ratios, preventing false estimates.</p>
+      <p>Combined with <b>rule-based sanity checks</b> and manual cross-verification on sample data, 
+      this framework ensures credibility — making every price output not just accurate but <b>context-aware</b>.</p>
+    </div>
+  </div>
+
+  <!-- CARD 5 -->
+  <div class="card left">
+    <div class="text">
+      <h2>Technology Stack</h2>
+      <p>Built using <b>Python</b>, <b>Flask</b>, and <b>scikit-learn</b>, the system integrates machine learning with a responsive, 
+      lightweight web interface. The design prioritizes performance, readability, and scalability.</p>
+      <p>Deployed seamlessly on <b>Render’s free cloud infrastructure</b>, the application is optimized for 
+      accessibility without compromising quality — providing users with an instant, elegant predictive experience.</p>
+    </div>
+    <div class="image" style="background-image:url('{{ url_for('static', filename='img/tech.jpg') }}');"></div>
+  </div>
+
+</section>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
