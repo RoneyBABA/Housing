@@ -38,6 +38,7 @@
           <option value="built-up area" {% if request.form.build_up=='built-up area' %}selected{% endif %}>Built-up Area</option>
           <option value="carpet area" {% if request.form.build_up=='carpet area' %}selected{% endif %}>Carpet Area</option>
           <option value="super built-up area" {% if request.form.build_up=='super built-up area' %}selected{% endif %}>Super Built-up Area</option>
+          <option value="plot area" {% if request.form.build_up=='plot area' %}selected{% endif %}>Plot Area</option>
         </select>
 
         <button type="submit">Predict</button>
