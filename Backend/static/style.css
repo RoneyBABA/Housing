@@ -1,12 +1,14 @@
+/* === GLOBAL === */
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
   color: #f8f9fa;
   background: #0b0b0c;
   overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
-/* Scrollable Gradient Background */
+/* Scrollable gradient background (soft purple flow) */
 .scroll-gradient {
   position: fixed;
   top: 0;
@@ -19,16 +21,40 @@ body {
   filter: blur(50px) brightness(1.15);
 }
 
-/* Hero Section */
+/* === HERO IMAGE === */
+.top-hero {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* full hero visible */
+  background-image: url("https://raw.githubusercontent.com/RoneyBABA/Housing/master/Backend/static/assets/hero.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.75);
+  z-index: 0;
+}
+
+/* dark gradient fade at bottom */
+.top-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0) 60%, #0b0b0c 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* === HERO SECTION (FORM) === */
 .hero {
-   position: relative;
-  z-index: 1;                 /* Bring form above background image */
+  position: relative;
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
   text-align: center;
-  min-height: 100vh;
+  min-height: 80vh;
+  padding-top: 40vh; /* start form below top 40% of hero */
+  background: transparent;
 }
 
 .hero h1 {
@@ -47,6 +73,18 @@ body {
   line-height: 1.6;
 }
 
+/* translucent glass form box */
+.hero-content {
+  background: rgba(15, 10, 25, 0.45);
+  backdrop-filter: blur(12px);
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 0 40px rgba(127, 90, 240, 0.25);
+  width: 90%;
+  max-width: 700px;
+}
+
+/* form styling */
 .form-container {
   background: rgba(255,255,255,0.04);
   padding: 28px;
@@ -95,7 +133,7 @@ button:hover {
   color: #a9a9c9;
 }
 
-/* Alternating Cards */
+/* === CARDS SECTION === */
 .cards {
   display: flex;
   flex-direction: column;
@@ -103,6 +141,7 @@ button:hover {
   padding: 100px 20px;
 }
 
+/* card base */
 .card {
   display: flex;
   align-items: stretch;
@@ -114,6 +153,7 @@ button:hover {
   opacity: 0;
   transform: translateY(60px);
   transition: all 1s ease-out;
+  position: relative;
 }
 
 .card.visible {
@@ -151,6 +191,7 @@ button:hover {
   letter-spacing: 0.2px;
 }
 
+/* image fade mask */
 .card .image {
   position: relative;
   flex: 1;
@@ -159,23 +200,21 @@ button:hover {
   background-repeat: no-repeat;
   transition: transform 0.4s ease;
   overflow: hidden;
-
-   /* fade out the image using a mask gradient */
-  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
-  mask-image: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to left, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
   -webkit-mask-size: 100%;
   mask-size: 100%;
 }
 
+/* reverse mask for right cards */
 .card.right .image {
-  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
-  mask-image: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
-
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to right, rgba(0,0,0,1) 60%, rgba(0,0,0,0) 100%);
 }
 
-/* === Soft ambient glow === */
+/* ambient glow */
 .card::before {
   content: "";
   position: absolute;
@@ -186,138 +225,52 @@ button:hover {
   z-index: 0;
 }
 
-.card {
-  position: relative;
-  overflow: hidden;
-}
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 900px) {
+  .hero {
+    padding-top: 30vh; /* start form a bit earlier */
+  }
 
-/* === HERO IMAGE FADE === */
-.top-hero {
-    position: fixed;            /* stays behind, covers viewport */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-image: url("https://raw.githubusercontent.com/RoneyBABA/Housing/master/Backend/static/assets/hero.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: -2;                /* Push hero image behind content */
-  filter: brightness(0.7); 
-}
+  .hero-content {
+    padding: 25px;
+    border-radius: 12px;
+    width: 95%;
+  }
 
-/* Dark fade overlay */
-.top-hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.2) 20%, #0b0b0c 100%);
-  pointer-events: none;
-  z-index: -1;
-}
+  /* stack cards vertically */
+  .card {
+    flex-direction: column;
+    text-align: center;
+  }
 
-.card {
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  overflow: hidden;
-  background: #0b0b0c; /* dark theme base */
-  border-radius: 20px;
-}
+  /* image always on top */
+  .card.left .image,
+  .card.right .image {
+    order: 1;
+    width: 100%;
+    min-height: 250px;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
+  }
 
-.card .image {
-  position: relative;
-  flex: 1;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  transition: transform 0.5s ease;
-}
+  .card.left .text,
+  .card.right .text {
+    order: 2;
+    padding: 2rem 1.5rem;
+    width: 100%;
+  }
 
-.card .text {
-  flex: 1;
-  padding: 3rem;
-  z-index: 2;
-  color: #e8e6f0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+  .card .text h2 {
+    font-size: 1.6rem;
+  }
 
-/* --- Default desktop layout --- */
-.card {
-  display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  position: relative;
-  border-radius: 20px;
-  overflow: hidden;
-  background: #0b0b0c;
-}
+  .card .text p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
 
-/* === Base image styling === */
-.card .image {
-  position: relative;
-  flex: 1;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  transition: transform 0.4s ease;
-  overflow: hidden;
-}
-
-
-/* === Soft ambient color glow === */
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: inherit;
-  filter: blur(60px) brightness(0.7);
-  opacity: 0.25;
-  z-index: 0;
-}
-
-
-/* Optional smooth transition if you want scroll-based darkening */
-.scroll-gradient {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 250%;
-  background: linear-gradient(180deg, rgba(11,11,12,0) 0%, #0b0b0c 100%);
-  z-index: 0;
-  pointer-events: none;
-  mix-blend-mode: multiply;
-  transition: opacity 0.6s ease;
-}
-
-/* === TITLE COLOR === */
-.hero-content h1 {
-  color: #3e2b63; /* extracted purple tone from your uploaded swatch */
-  font-family: 'Playfair Display', serif;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-shadow: 0 0 15px rgba(62, 43, 99, 0.4);
-}
-.hero-content {
-  background: rgba(15, 10, 25, 0.45);  /* Subtle translucent box */
-  backdrop-filter: blur(12px);
-  padding: 40px;
-  border-radius: 18px;
-  box-shadow: 0 0 40px rgba(127, 90, 240, 0.25);
-  width: 90%;
-  max-width: 700px;
-}
-.hero {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  min-height: 80vh;
-  padding-top: 40vh; /* pushes form start below top 40% of hero */
-  background: #0b0b0c; /* background for continuity */
+  .cards {
+    gap: 80px;
+    padding: 60px 10px;
+  }
 }
