@@ -62,7 +62,7 @@ def index():
             prediction_text = formatted
 
     return render_template('index.html',
-                           locations=location_columns
+                           locations=location_columns,
                            prediction_text=prediction_text,
                            actual_value=actual_value,
                            request=request)
