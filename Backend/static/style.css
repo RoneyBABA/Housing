@@ -270,6 +270,11 @@ button:hover {
     text-align: center;
   }
 
+  .card .text {
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+  
   /* Image always on top */
   .card.left .image,
   .card.right .image {
@@ -297,7 +302,7 @@ button:hover {
   }
 
   .card .text p {
-    font-size: 0.80rem;
+    font-size: 0.95rem;
     line-height: 1.6;
     text-align: justify; /* makes text edges clean */
     text-justify: inter-word;
