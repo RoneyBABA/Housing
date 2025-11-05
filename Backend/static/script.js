@@ -13,10 +13,16 @@ revealCards();
 window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
   const gradient = document.querySelector('.scroll-gradient');
-  gradient.style.opacity = Math.min(scrollY / 400, 1);
+  gradient.style.opacity = Math.min(scrollY / 800, 0.8);
 });
 
-const locations = {{ locations|tojson }};
+
+document.addEventListener("DOMContentLoaded", () => {
+  const input = document.getElementById("location");
+  const suggestionBox = document.getElementById("suggestions");
+  let selectedIndex = -1;
+}
+
 const input = document.getElementById("location");
 const suggestionBox = document.getElementById("suggestions");
 let selectedIndex = -1;
@@ -115,4 +121,6 @@ document.addEventListener("click", (e) => {
   if (!suggestionBox.contains(e.target) && e.target !== input) {
     suggestionBox.innerHTML = "";
   }
+});
+
 });

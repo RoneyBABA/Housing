@@ -125,3 +125,8 @@
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
+
+<script>
+  const locations = {{ locations|tojson }};
+</script>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
