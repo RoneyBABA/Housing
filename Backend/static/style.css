@@ -21,12 +21,14 @@ body {
 
 /* Hero Section */
 .hero {
-  min-height: 100vh;
+   position: relative;
+  z-index: 1;                 /* Bring form above background image */
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   text-align: center;
-  padding: 40px;
+  min-height: 100vh;
 }
 
 .hero h1 {
@@ -93,30 +95,202 @@ button:hover {
   color: #a9a9c9;
 }
 
+/* Alternating Cards */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 140px;
+  padding: 100px 20px;
+}
+
+.card {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  background: rgba(255,255,255,0.05);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(127,90,240,0.3);
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 1s ease-out;
+}
+
+.card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card .text, .card .image {
+  flex: 1;
+  min-height: 420px;
+}
+
+.card .text {
+  flex: 1.2;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.75;
+}
+
+.card .text h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  color: #c77dff;
+  margin-bottom: 18px;
+  text-shadow: 0 0 15px rgba(199,125,255,0.25);
+}
+
+.card .text p {
+  font-family: 'Inter', sans-serif;
+  color: #e7d9fa;
+  font-size: 1.05rem;
+  margin-bottom: 12px;
+  letter-spacing: 0.2px;
+}
+
+.card .image {
+  position: relative;
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform 0.4s ease;
+  overflow: hidden;
+
+   /* fade out the image using a mask gradient */
+  -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100%;
+  mask-size: 100%;
+}
+
+.card.right .image {
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+  mask-image: linear-gradient(to right, rgba(0,0,0,1) 0%, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
+
+}
+
+/* === Soft ambient glow === */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  filter: blur(60px) brightness(0.7);
+  opacity: 0.25;
+  z-index: 0;
+}
+
+/* === Mobile behavior: vertical fade === */
+@media (max-width: 768px) {
+  .card .image {
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  }
+
+  .card .image {
+    min-height: 250px;
+  }
+
+  .card .text {
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+}
+
 /* === HERO IMAGE FADE === */
 .top-hero {
-  position: relative;
+    position: fixed;            /* stays behind, covers viewport */
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100vh;
   background-image: url("https://raw.githubusercontent.com/RoneyBABA/Housing/master/Backend/static/assets/hero.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  z-index: -2;                /* Push hero image behind content */
+  filter: brightness(0.65); 
+}
+
+/* Dark fade overlay */
+.top-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.2) 20%, #0b0b0c 100%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  overflow: hidden;
+  background: #0b0b0c; /* dark theme base */
+  border-radius: 20px;
+}
+
+.card .image {
+  position: relative;
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform 0.5s ease;
+}
+
+.card .text {
+  flex: 1;
+  padding: 3rem;
+  z-index: 2;
+  color: #e8e6f0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* --- Default desktop layout --- */
+.card {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #0b0b0c;
+}
+
+/* === Base image styling === */
+.card .image {
+  position: relative;
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: transform 0.4s ease;
   overflow: hidden;
 }
 
-/* === Subtle hover motion (optional aesthetic touch) === */
-.card .image:hover {
-  transform: scale(1.03);
-}
 
-/* === Smooth color diffusion around the card === */
+/* === Soft ambient color glow === */
 .card::before {
   content: "";
   position: absolute;
   inset: 0;
   background: inherit;
-  filter: blur(60px) brightness(0.8);
+  filter: blur(60px) brightness(0.7);
   opacity: 0.25;
   z-index: 0;
 }
@@ -144,187 +318,10 @@ button:hover {
   letter-spacing: 1px;
   text-shadow: 0 0 15px rgba(62, 43, 99, 0.4);
 }
-
-/* ===========================================
-   ALTERNATING FEATURE CARDS (UNIFIED VERSION)
-   =========================================== */
-.cards {
-  display: flex;
-  flex-direction: column;
-  gap: 140px;
-  padding: 100px 20px;
-}
-
-/* --- CARD BASE STYLE --- */
-.card {
-  position: relative;
-  display: flex;
-  align-items: stretch;
-  justify-content: space-between;
-  background: #0b0b0c; /* dark base */
-  border-radius: 28px;
-  overflow: hidden;
-  box-shadow: 0 0 30px rgba(127, 90, 240, 0.3);
-  opacity: 0;
-  transform: translateY(60px);
-  transition: all 1s ease-out;
-}
-
-/* Reveal animation (triggered by JS on scroll) */
-.card.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* --- TEXT + IMAGE STRUCTURE --- */
-.card .text, 
-.card .image {
-  flex: 1;
-  min-height: 420px;
-}
-
-.card .text {
-  flex: 1.2;
-  padding: 60px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  line-height: 1.75;
-  color: #e8e6f0;
-  z-index: 2;
-}
-
-.card .text h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  color: #c77dff;
-  margin-bottom: 18px;
-  text-shadow: 0 0 15px rgba(199,125,255,0.25);
-}
-
-.card .text p {
-  font-family: 'Inter', sans-serif;
-  color: #e7d9fa;
-  font-size: 1.05rem;
-  margin-bottom: 12px;
-  letter-spacing: 0.2px;
-}
-
-/* --- IMAGE BASE --- */
-.card .image {
-  position: relative;
-  flex: 1;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.9;
-  transition: opacity 0.8s ease, transform 0.4s ease;
-  filter: brightness(0.85) contrast(1.05);
-  overflow: hidden;
-}
-
-/* === Fade illusion — Left-aligned cards (text on right) === */
-.card.left .image::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to right,
-    rgba(11,11,12,0) 0%, 
-    rgba(11,11,12,0.1) 30%, 
-    rgba(11,11,12,0.3) 60%, 
-    rgba(11,11,12,0.6) 80%, 
-    rgba(11,11,12,0.9) 100%);
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-}
-
-/* === Fade illusion — Right-aligned cards (text on left) === */
-.card.right .image::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to left,
-    rgba(11,11,12,0) 0%, 
-    rgba(11,11,12,0.1) 30%, 
-    rgba(11,11,12,0.3) 60%, 
-    rgba(11,11,12,0.6) 80%, 
-    rgba(11,11,12,0.9) 100%);
-  pointer-events: none;
-  transition: opacity 0.4s ease;
-}
-
-/* --- Ambient glow for depth --- */
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: inherit;
-  filter: blur(60px) brightness(0.7);
-  opacity: 0.25;
-  z-index: 0;
-}
-
-/* --- Alternating Layout Order --- */
-.card.left .text { order: 1; }
-.card.left .image { order: 2; }
-
-.card.right .image { order: 1; }
-.card.right .text { order: 2; }
-
-/* --- Hover Interaction --- */
-.card .image:hover {
-  transform: scale(1.03);
-  opacity: 1;
-}
-
-/* --- MOBILE RESPONSIVE STYLING --- */
-@media (max-width: 900px) {
-  .card {
-    flex-direction: column;
-  }
-
-  /* Always show image on top */
-  .card.left .image,
-  .card.right .image {
-    order: 1;
-  }
-
-  .card.left .text,
-  .card.right .text {
-    order: 2;
-  }
-
-  /* Vertical fade for mobile layout */
-  .card.left .image::after,
-  .card.right .image::after {
-    background: linear-gradient(to bottom,
-      rgba(11,11,12,0) 0%,
-      rgba(11,11,12,0.2) 40%,
-      rgba(11,11,12,0.6) 75%,
-      rgba(11,11,12,0.9) 100%);
-  }
-
-  /* Adjust mobile dimensions */
-  .card .image {
-    min-height: 250px;
-  }
-
-  .card .text {
-    padding: 40px 25px;
-  }
-}
-
-/* === Subtle hover motion (optional aesthetic touch) === */
-.card .image:hover {
-  transform: scale(1.03);
-}
-
-.card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: inherit;
-  filter: blur(40px) brightness(0.9);
-  opacity: 0.3;
+.hero-content {
+  background: rgba(15, 10, 25, 0.45);  /* Subtle translucent box */
+  backdrop-filter: blur(12px);
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 0 40px rgba(127, 90, 240, 0.25);
 }

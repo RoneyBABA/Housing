@@ -1,4 +1,3 @@
-// Reveal animation
 const cards = document.querySelectorAll('.card');
 function revealCards() {
   const trigger = window.innerHeight * 0.85;
@@ -13,5 +12,5 @@ revealCards();
 window.addEventListener('scroll', () => {
   const scrollY = window.scrollY;
   const gradient = document.querySelector('.scroll-gradient');
-  gradient.style.opacity = Math.min(scrollY / 800, 0.8);
+  gradient.style.opacity = Math.min(scrollY / 400, 1);
 });
