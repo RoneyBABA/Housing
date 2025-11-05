@@ -297,7 +297,7 @@ button:hover {
   }
 
   .card .text p {
-    font-size: 0.95rem;
+    font-size: 0.80rem;
     line-height: 1.6;
     text-align: justify; /* makes text edges clean */
     text-justify: inter-word;
