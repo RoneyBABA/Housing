@@ -18,9 +18,8 @@
 <!-- HERO SECTION -->
 <section class="hero">
   <div class="hero-content">
-    <h1> Bangalore House Price Predictor</h1>
-    <p>Discover accurate, AI-driven property valuations built on 13,000+ curated Bangalore listings. 
-    Designed for transparency, precision, and elegance.</p>
+    <h1> UrbanValuate</h1>
+    <p>AI-Powered Bangalore Home Price Predictor </p>
 
     <div class="form-container">
       <form action="/" method="post">
@@ -31,7 +30,10 @@
         <input type="number" name="bhk" required value="{{ request.form.bhk or '' }}">
 
         <label>Location:</label>
-        <input type="text" name="location" placeholder="e.g., hsr layout" required value="{{ request.form.location or '' }}">
+        <div class="autocomplete-wrapper">
+        <input type="text" id="location" name="location" placeholder="e.g., HSR Layout" required value="{{ request.form.location or '' }}">
+        <ul id="suggestions" class="suggestions"></ul>
+        </div>
 
         <label>Build-up Type:</label>
         <select name="build_up" required>
