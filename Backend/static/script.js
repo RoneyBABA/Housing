@@ -14,3 +14,9 @@ window.addEventListener('scroll', () => {
   const gradient = document.querySelector('.scroll-gradient');
   gradient.style.opacity = Math.min(scrollY / 400, 1);
 });
+
+window.addEventListener("scroll", () => {
+  const hero = document.querySelector(".top-hero::after");
+  const scrolled = window.scrollY / 400;
+  hero.style.opacity = Math.min(1, scrolled);
+});

@@ -21,28 +21,40 @@ body {
   filter: blur(50px) brightness(1.15);
 }
 
-/* === HERO IMAGE === */
 .top-hero {
   position: relative;
   width: 100%;
-  height: 100vh; /* full hero visible */
+  height: 100vh; /* full hero image visible */
   background-image: url("https://raw.githubusercontent.com/RoneyBABA/Housing/master/Backend/static/assets/hero.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: brightness(0.75);
+  filter: brightness(0.8);
   z-index: 0;
+  overflow: hidden;
 }
 
-/* dark gradient fade at bottom */
+/* === SMOOTH GRADUAL TRANSITION TO BLACK === */
 .top-hero::after {
   content: "";
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, rgba(0,0,0,0) 60%, #0b0b0c 100%);
-  pointer-events: none;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 55%; /* controls fade height */
+  background: linear-gradient(
+    to bottom,
+    rgba(11, 11, 12, 0) 0%,     /* fully visible */
+    rgba(11, 11, 12, 0.2) 30%,  /* start dimming */
+    rgba(11, 11, 12, 0.5) 60%,  /* mid fade */
+    rgba(11, 11, 12, 0.8) 85%,  /* near black */
+    rgba(11, 11, 12, 1) 100%    /* solid black bottom */
+  );
   z-index: 1;
+  pointer-events: none;
+  transition: opacity 1s ease-in-out;
 }
+
 
 /* === HERO SECTION (FORM) === */
 .hero {
@@ -225,10 +237,12 @@ button:hover {
   z-index: 0;
 }
 
-/* === MOBILE RESPONSIVE === */
+
+/* === MOBILE RESPONSIVE (≤ 900px) === */
 @media (max-width: 900px) {
+  /* Hero spacing */
   .hero {
-    padding-top: 30vh; /* start form a bit earlier */
+    padding-top: 30vh;
   }
 
   .hero-content {
@@ -237,13 +251,13 @@ button:hover {
     width: 95%;
   }
 
-  /* stack cards vertically */
+  /* Stack cards vertically */
   .card {
     flex-direction: column;
     text-align: center;
   }
 
-  /* image always on top */
+  /* Image always on top */
   .card.left .image,
   .card.right .image {
     order: 1;
@@ -253,22 +267,31 @@ button:hover {
     mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 70%, rgba(0,0,0,0) 100%);
   }
 
+  /* Text section below image */
   .card.left .text,
   .card.right .text {
     order: 2;
     padding: 2rem 1.5rem;
     width: 100%;
+    text-align: center; /* centers heading */
   }
 
+  /* Headings centered, paragraphs justified */
   .card .text h2 {
     font-size: 1.6rem;
+    text-align: center;
+    margin-bottom: 1rem;
   }
 
   .card .text p {
     font-size: 0.95rem;
     line-height: 1.6;
+    text-align: justify; /* makes text edges clean */
+    text-justify: inter-word;
+    margin-bottom: 12px;
   }
 
+  /* Reduce gap between cards */
   .cards {
     gap: 80px;
     padding: 60px 10px;
