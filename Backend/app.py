@@ -8,15 +8,6 @@ app = Flask(__name__)
 model = pickle.load(open('FinalModel.pickle', 'rb'))
 columns = json.load(open('columns.json'))['data_colums']
 
-with open('columns.json', 'r') as f:
-    data = json.load(f)
-    all_columns = data['data_colums']
-
-# Only locations
-location_columns = [col for col in all_columns if col not in [
-    "built-up area", "carpet area", "super built-up area", "total_sqft", "bhk", "sqft_per_bhk"
-]]
-
 # ---------- Core Prediction Function ----------
 def predict_price(location, sqft, bhk, build_up):
     if (sqft/bhk) < 300:
@@ -62,7 +53,6 @@ def index():
             prediction_text = formatted
 
     return render_template('index.html',
-                           locations=location_columns,
                            prediction_text=prediction_text,
                            actual_value=actual_value,
                            request=request)
